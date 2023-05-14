@@ -33,11 +33,12 @@ public class UpdateController {
    * @param update входящее сообщение (апдейт)
    */
   public void processMessage(Update update) {
-    var sendMessageDto = messageDistributor.processMessage(update);
+    var sendMessageDtoOpt = messageDistributor.processMessage(update);
     // если сообщение просто отредачили, то ничего не делать
-    if (sendMessageDto == null) {
+    if (sendMessageDtoOpt.isEmpty()) {
       return;
     }
+    var sendMessageDto = sendMessageDtoOpt.get();
 
     sendResponseToUser(sendMessageDto);
   }

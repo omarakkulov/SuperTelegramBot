@@ -54,13 +54,6 @@ public class TelegramBot extends TelegramLongPollingBot {
       );
     }
 
-    if (update.getEditedMessage() != null) {
-      log.info("Message was edited. Edited message: chatId={}, username={}, message={}",
-          update.getEditedMessage().getChatId(),
-          update.getEditedMessage().getFrom().getUserName(),
-          update.getEditedMessage().getText());
-    }
-
     updateController.processMessage(update);
   }
 
@@ -83,7 +76,7 @@ public class TelegramBot extends TelegramLongPollingBot {
           sendMessageDto.getUsername()
       );
     } catch (TelegramApiException e) {
-      log.error("Error while during sending message to user: text={}, chatId={}, username={}",
+      log.warn("Error while during sending message to user: text={}, chatId={}, username={}",
           sendMessageDto.getText(),
           sendMessageDto.getChatId(),
           sendMessageDto.getUsername());

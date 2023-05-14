@@ -2,6 +2,7 @@ package com.akkulov.controller;
 
 import com.akkulov.common.model.SendMessageDto;
 import com.akkulov.utils.MessageUtils;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -21,9 +22,9 @@ public class MessageDistributor {
    * @param update апдейт
    * @return ответ пользователю
    */
-  public SendMessageDto processMessage(Update update) {
+  public Optional<SendMessageDto> processMessage(Update update) {
     if (update.getEditedMessage() != null) {
-      return null;
+      return Optional.empty();
     }
 
     if (update.getMessage().getText() == null) {
@@ -38,8 +39,8 @@ public class MessageDistributor {
    *
    * @param update апдейт
    */
-  private SendMessageDto processTextMessageType(Update update) {
-    return MessageUtils.textMessage(update, update.getMessage().getText());
+  private Optional<SendMessageDto> processTextMessageType(Update update) {
+    return Optional.ofNullable(MessageUtils.textMessage(update, update.getMessage().getText()));
   }
 
   /**
@@ -47,11 +48,11 @@ public class MessageDistributor {
    *
    * @param update апдейт
    */
-  private SendMessageDto processUnsupportedMessageType(Update update) {
+  private Optional<SendMessageDto> processUnsupportedMessageType(Update update) {
     log.error("Unsupported message type from user: username={}",
         update.getMessage().getFrom().getUserName()
     );
-    return MessageUtils.textMessage(update,
-        "Неподдерживаемый вид сообщения! Введите название песни!");
+    return Optional.ofNullable(MessageUtils.textMessage(update,
+        "Неподдерживаемый вид сообщения! Введите название песни!"));
   }
 }
