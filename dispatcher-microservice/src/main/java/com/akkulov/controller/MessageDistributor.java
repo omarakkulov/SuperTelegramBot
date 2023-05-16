@@ -1,6 +1,8 @@
 package com.akkulov.controller;
 
-import com.akkulov.common.model.SendMessageDto;
+import com.akkulov.model.SendMessageDto;
+import com.akkulov.common.properties.RabbitQueueProperties;
+import com.akkulov.service.queue.producer.UpdateProducerImpl;
 import com.akkulov.utils.MessageUtils;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RequiredArgsConstructor
 public class MessageDistributor {
 
+  private final RabbitQueueProperties rabbitQueueProperties;
+  private final UpdateProducerImpl updateProducerImpl;
+
   /**
    * Распределить апдейт на нужную очередь.
    *
@@ -23,6 +28,7 @@ public class MessageDistributor {
    * @return ответ пользователю
    */
   public Optional<SendMessageDto> processMessage(Update update) {
+    // если сообщение просто отредачили, то ничего не делать
     if (update.getEditedMessage() != null) {
       return Optional.empty();
     }
@@ -40,7 +46,10 @@ public class MessageDistributor {
    * @param update апдейт
    */
   private Optional<SendMessageDto> processTextMessageType(Update update) {
-    return Optional.ofNullable(MessageUtils.textMessage(update, update.getMessage().getText()));
+    updateProducerImpl.produce(rabbitQueueProperties.getTextMessageQueueName(), update);
+
+//    return Optional.ofNullable(MessageUtils.textMessage(update, update.getMessage().getText()));
+    return Optional.ofNullable(MessageUtils.textMessage(update, "Сообщение получено, ищем трек..."));
   }
 
   /**

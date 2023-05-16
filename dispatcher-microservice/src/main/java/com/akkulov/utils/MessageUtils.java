@@ -1,6 +1,6 @@
 package com.akkulov.utils;
 
-import com.akkulov.common.model.SendMessageDto;
+import com.akkulov.model.SendMessageDto;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
