@@ -9,13 +9,13 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UpdateProducerImpl implements UpdateProducer {
+public class DispatcherUpdateProducerImpl implements UpdateProducer {
 
   private final RabbitTemplate rabbitTemplate;
 
   @Override
   public void produce(String queueName, Update update) {
-    log.info(update.getMessage().getText());
+    log.info("Send message to RabbitMQ: queueName={}", queueName);
     rabbitTemplate.convertAndSend(queueName, update);
   }
 }

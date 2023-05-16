@@ -1,13 +1,14 @@
 package com.akkulov.controller;
 
-import com.akkulov.model.SendMessageDto;
 import com.akkulov.common.properties.RabbitQueueProperties;
-import com.akkulov.service.queue.producer.UpdateProducerImpl;
+import com.akkulov.model.SendMessageDto;
+import com.akkulov.service.queue.producer.DispatcherUpdateProducerImpl;
 import com.akkulov.utils.MessageUtils;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
@@ -19,7 +20,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class MessageDistributor {
 
   private final RabbitQueueProperties rabbitQueueProperties;
-  private final UpdateProducerImpl updateProducerImpl;
+  private final DispatcherUpdateProducerImpl dispatcherUpdateProducerImpl;
 
   /**
    * Распределить апдейт на нужную очередь.
@@ -27,7 +28,7 @@ public class MessageDistributor {
    * @param update апдейт
    * @return ответ пользователю
    */
-  public Optional<SendMessageDto> processMessage(Update update) {
+  public Optional<SendMessage> processMessage(Update update) {
     // если сообщение просто отредачили, то ничего не делать
     if (update.getEditedMessage() != null) {
       return Optional.empty();
@@ -45,11 +46,10 @@ public class MessageDistributor {
    *
    * @param update апдейт
    */
-  private Optional<SendMessageDto> processTextMessageType(Update update) {
-    updateProducerImpl.produce(rabbitQueueProperties.getTextMessageQueueName(), update);
+  private Optional<SendMessage> processTextMessageType(Update update) {
+    dispatcherUpdateProducerImpl.produce(rabbitQueueProperties.getTextMessageQueueName(), update);
 
-//    return Optional.ofNullable(MessageUtils.textMessage(update, update.getMessage().getText()));
-    return Optional.ofNullable(MessageUtils.textMessage(update, "Сообщение получено, ищем трек..."));
+    return Optional.ofNullable(MessageUtils.textMessage(update, "Сохраняем информацию..."));
   }
 
   /**
@@ -57,11 +57,11 @@ public class MessageDistributor {
    *
    * @param update апдейт
    */
-  private Optional<SendMessageDto> processUnsupportedMessageType(Update update) {
+  private Optional<SendMessage> processUnsupportedMessageType(Update update) {
     log.error("Unsupported message type from user: username={}",
         update.getMessage().getFrom().getUserName()
     );
     return Optional.ofNullable(MessageUtils.textMessage(update,
-        "Неподдерживаемый вид сообщения! Введите название песни!"));
+        "Неподдерживаемый вид сообщения! Текст!"));
   }
 }

@@ -57,34 +57,41 @@ public class TelegramBot extends TelegramLongPollingBot {
     updateController.processMessage(update);
   }
 
-  /**
-   * Отправить ответ пользователю.
-   *
-   * @param sendMessageDto ответ пользователю
-   */
-  public void sendResponse(SendMessageDto sendMessageDto) {
-    var sendMessage = SendMessage.builder()
-        .chatId(sendMessageDto.getChatId())
-        .text(sendMessageDto.getText())
-        .build();
-
-    try {
-      execute(sendMessage);
-      log.info("Success send response to user: text={}, chatId={}, username={}",
-          sendMessageDto.getText(),
-          sendMessageDto.getChatId(),
-          sendMessageDto.getUsername()
-      );
-    } catch (TelegramApiException e) {
-      log.warn("Error while during sending message to user: text={}, chatId={}, username={}",
-          sendMessageDto.getText(),
-          sendMessageDto.getChatId(),
-          sendMessageDto.getUsername());
-      throw new IllegalStateException(e);
-    }
-  }
+//  /**
+//   * Отправить ответ пользователю.
+//   *
+//   * @param sendMessageDto ответ пользователю
+//   */
+//  public void sendResponse(SendMessageDto sendMessageDto) {
+//    var sendMessage = SendMessage.builder()
+//        .chatId(sendMessageDto.getChatId())
+//        .text(sendMessageDto.getText())
+//        .build();
+//
+//    try {
+//      execute(sendMessage);
+//      log.info("Success send response to user: text={}, chatId={}, username={}",
+//          sendMessageDto.getText(),
+//          sendMessageDto.getChatId(),
+//          sendMessageDto.getUsername()
+//      );
+//    } catch (TelegramApiException e) {
+//      log.warn("Error while during sending message to user: text={}, chatId={}, username={}",
+//          sendMessageDto.getText(),
+//          sendMessageDto.getChatId(),
+//          sendMessageDto.getUsername());
+//      throw new IllegalStateException(e);
+//    }
+//  }
 
   public void sendResponse(SendMessage sendMessage) {
+    // бывают моменты, когда айдишник чата получается null, видимо эта хрень связана с лонгПоллингБотом
+    // и приходят всякие системные уведомления к боту от не чата типа, либо же от брокера иногда
+    // приходит не совсем то, что нам надо
+    if (sendMessage.getChatId() == null) {
+      return;
+    }
+
     try {
       execute(sendMessage);
       log.info("Success send response to user: text={}, chatId={}",
