@@ -33,23 +33,14 @@ public class UpdateController {
    * @param update входящее сообщение (апдейт)
    */
   public void processMessage(Update update) {
-    var sendMessageDtoOpt = messageDistributor.processMessage(update);
+    var sendMessageOpt = messageDistributor.processMessage(update);
     // если сообщение просто отредачили, то ничего не делать
-    if (sendMessageDtoOpt.isEmpty()) {
+    if (sendMessageOpt.isEmpty()) {
       return;
     }
-    var sendMessageDto = sendMessageDtoOpt.get();
+    var sendMessage = sendMessageOpt.get();
 
-    sendResponseToUser(sendMessageDto);
-  }
-
-  /**
-   * Отправить ответ пользователю.
-   *
-   * @param sendMessageDto ответ пользователю
-   */
-  public void sendResponseToUser(SendMessageDto sendMessageDto) {
-    telegramBot.sendResponse(sendMessageDto);
+    sendResponseToUser(sendMessage);
   }
 
   /**

@@ -1,6 +1,7 @@
 package com.akkulov.utils;
 
 import com.akkulov.model.SendMessageDto;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 /**
@@ -17,9 +18,8 @@ public final class MessageUtils {
    * @param update сообщение
    * @param text   текст сообщения
    */
-  public static SendMessageDto textMessage(Update update, String text) {
-    return SendMessageDto.builder()
-        .username(update.getMessage().getFrom().getUserName())
+  public static SendMessage textMessage(Update update, String text) {
+    return SendMessage.builder()
         .chatId(update.getMessage().getChatId())
         .text(text)
         .build();

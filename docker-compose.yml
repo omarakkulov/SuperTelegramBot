@@ -20,6 +20,11 @@ services:
       - POSTGRES_PASSWORD=omar
     ports:
       - "5435:5432"
+#    volumes:
+#      - pgdata:/var/lib/postgresql/data
+#
+#volumes:
+#  pgdata:
 
 #  zookeper:
 #    image: confluentinc/cp-zookeeper

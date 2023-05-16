@@ -1,4 +1,4 @@
-package com.akkulov.config;
+package com.akkulov.common.config;
 
 import com.akkulov.common.properties.RabbitQueueProperties;
 import lombok.RequiredArgsConstructor;
@@ -13,14 +13,35 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @RequiredArgsConstructor
-public class RabbitConfiguration {
+public class DispatcherRabbitConfiguration {
+
+  /**
+   * Пропертя с названиями очередей.
+   */
+  private final RabbitQueueProperties rabbitQueueProperties;
 
   /**
    * Преобразует приходящий объект апдейта из телеги в json и передает их в rabbitmq.
    * И наоборот, при получении обратно этих json из брокера, преобразует их в java-объект.
    */
   @Bean
-  public MessageConverter jsonMessageConverter() {
+  public MessageConverter dispatcherJsonMessageConverter() {
     return new Jackson2JsonMessageConverter();
+  }
+
+  /**
+   * Бин, соответствующий очереди с текстовыми сообщениями в rabbitmq.
+   */
+  @Bean
+  public Queue textMessageQueue() {
+    return new Queue(rabbitQueueProperties.getTextMessageQueueName());
+  }
+
+  /**
+   * Бин, соответствующий очереди, в которую будут помещаться ответы.
+   */
+  @Bean
+  public Queue answerMessageQueue() {
+    return new Queue(rabbitQueueProperties.getAnswerMessageQueueName());
   }
 }
