@@ -1,4 +1,4 @@
-package com.akkulov.common.model;
+package com.akkulov.model;
 
 import lombok.Builder;
 import lombok.Getter;

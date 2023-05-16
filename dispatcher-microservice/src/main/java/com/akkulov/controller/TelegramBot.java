@@ -1,7 +1,7 @@
 package com.akkulov.controller;
 
-import com.akkulov.common.model.SendMessageDto;
 import com.akkulov.common.properties.TelegramBotProperties;
+import com.akkulov.model.SendMessageDto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -84,6 +84,20 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
   }
 
+  public void sendResponse(SendMessage sendMessage) {
+    try {
+      execute(sendMessage);
+      log.info("Success send response to user: text={}, chatId={}",
+          sendMessage.getText(),
+          sendMessage.getChatId()
+      );
+    } catch (TelegramApiException e) {
+      log.warn("Error while during sending message to user: text={}, chatId={}",
+          sendMessage.getText(),
+          sendMessage.getChatId());
+      throw new IllegalStateException(e);
+    }
+  }
 
   @Override
   public String getBotUsername() {

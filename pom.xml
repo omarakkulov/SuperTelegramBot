@@ -5,6 +5,8 @@
   <packaging>pom</packaging>
   <modules>
     <module>dispatcher-microservice</module>
+    <module>common-rabbitmq</module>
+    <module>read-messages-microservice</module>
   </modules>
 
   <parent>
@@ -23,9 +25,21 @@
   <properties>
     <java.version>11</java.version>
     <lombok.version>1.18.12</lombok.version>
+    <telegrambot.version>6.3.0</telegrambot.version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.telegram</groupId>
+      <artifactId>telegrambots-spring-boot-starter</artifactId>
+      <version>${telegrambot.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>

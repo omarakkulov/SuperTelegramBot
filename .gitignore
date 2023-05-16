@@ -33,3 +33,4 @@ build/
 .vscode/
 
 dispatcher-microservice/src/main/resources/bot-config.properties
+dispatcher-microservice/src/main/resources/rabbit-config.properties

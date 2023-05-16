@@ -1,6 +1,6 @@
 package com.akkulov.controller;
 
-import com.akkulov.common.model.SendMessageDto;
+import com.akkulov.model.SendMessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -48,7 +48,16 @@ public class UpdateController {
    *
    * @param sendMessageDto ответ пользователю
    */
-  private void sendResponseToUser(SendMessageDto sendMessageDto) {
+  public void sendResponseToUser(SendMessageDto sendMessageDto) {
     telegramBot.sendResponse(sendMessageDto);
+  }
+
+  /**
+   * Отправить ответ пользователю.
+   *
+   * @param sendMessage ответ пользователю
+   */
+  public void sendResponseToUser(SendMessage sendMessage) {
+    telegramBot.sendResponse(sendMessage);
   }
 }

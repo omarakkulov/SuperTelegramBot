@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Import;
  * Общий класс с пропертями.
  */
 @Import({
-    TelegramBotProperties.class
+    TelegramBotProperties.class,
+    RabbitQueueProperties.class
 })
 @Configuration
 public class ConfigurationProperties {
