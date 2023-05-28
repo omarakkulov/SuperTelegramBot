@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 /**
  * Сервис для отправки ответа брокеру.
  */
-public interface ProducerService {
+public interface ReadMessagesProducerService {
 
   /**
    * Отправить сообщение в брокер.

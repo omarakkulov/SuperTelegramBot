@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 /**
  * Интерфейс для получения ответов от брокера.
  */
-public interface ConsumerService {
+public interface ReadMessagesConsumerService {
 
   /**
    * Принять ответ от брокера в наш сервис.

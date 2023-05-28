@@ -1,8 +1,7 @@
 package com.akkulov.controller;
 
 import com.akkulov.common.properties.RabbitQueueProperties;
-import com.akkulov.model.SendMessageDto;
-import com.akkulov.service.queue.producer.DispatcherUpdateProducerImpl;
+import com.akkulov.service.queue.producer.DispatcherDispatcherUpdateProducerImpl;
 import com.akkulov.utils.MessageUtils;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class MessageDistributor {
 
   private final RabbitQueueProperties rabbitQueueProperties;
-  private final DispatcherUpdateProducerImpl dispatcherUpdateProducerImpl;
+  private final DispatcherDispatcherUpdateProducerImpl dispatcherUpdateProducerImpl;
 
   /**
    * Распределить апдейт на нужную очередь.

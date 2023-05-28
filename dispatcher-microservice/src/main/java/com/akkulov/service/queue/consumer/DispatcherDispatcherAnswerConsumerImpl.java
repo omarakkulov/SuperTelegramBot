@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DispatcherAnswerConsumerImpl implements AnswerConsumer {
+public class DispatcherDispatcherAnswerConsumerImpl implements DispatcherAnswerConsumer {
 
   private final UpdateController updateController;
 

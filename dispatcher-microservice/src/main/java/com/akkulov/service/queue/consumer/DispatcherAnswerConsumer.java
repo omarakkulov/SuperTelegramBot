@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 /**
  * Инттерфейс для получения сообщений от брокера.
  */
-public interface AnswerConsumer {
+public interface DispatcherAnswerConsumer {
 
   /**
    * Получить сообщение.

@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class DispatcherUpdateProducerImpl implements UpdateProducer {
+public class DispatcherDispatcherUpdateProducerImpl implements DispatcherUpdateProducer {
 
   private final RabbitTemplate rabbitTemplate;
 

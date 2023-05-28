@@ -5,7 +5,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 /**
  * Интерфейс для доставки сообщений в очередь брокера.
  */
-public interface UpdateProducer {
+public interface DispatcherUpdateProducer {
 
   /**
    * Отправить сообщение в очередь.

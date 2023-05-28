@@ -8,7 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 @Service
 @RequiredArgsConstructor
-public class ReadMesssagesProducerServiceImpl implements ProducerService {
+public class ReadMessagesProducerServiceImpl implements ReadMessagesProducerService {
 
   private final RabbitTemplate rabbitTemplate;
 

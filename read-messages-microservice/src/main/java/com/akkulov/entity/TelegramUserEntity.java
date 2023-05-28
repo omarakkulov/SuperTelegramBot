@@ -1,4 +1,4 @@
-package com.akkulov.model;
+package com.akkulov.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,20 +15,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_entity")
+@Table(name = "telegram_user")
 @Entity
-public class UserEntity {
+public class TelegramUserEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "username")
-  private String username;
-
   @Column(name = "chat_id")
   private Long chatId;
 
-  @Column(name = "chat_text")
-  private String chatText;
+  @Column(name = "username")
+  private String username;
 }
